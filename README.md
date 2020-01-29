@@ -12,7 +12,7 @@ docker build c_dev -t c_dev:latest
 
 To build in background:
 ```
-docker build c_dev -qt c_dev:latest &
+docker build c_dev -qt c_dev:latest &>/dev/null
 ```
 
 ## Running the Container
