@@ -1,0 +1,5 @@
+# Ignore OS files
+.DS_Store
+
+# Ignore personal files
+*.todo
