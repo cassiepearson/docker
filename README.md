@@ -15,6 +15,11 @@ To build in background:
 docker build c_dev -qt c_dev:latest &>/dev/null
 ```
 
+To build all:
+```
+bash build.bash
+```
+
 ## Running the Container
 I alias these to make using the containers easier.
 
