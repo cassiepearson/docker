@@ -12,6 +12,8 @@ RUN apt-get update -qq && apt-get -qq --yes install gcc gdb \
     curl \
     git \
     ripgrep \
+    mit-scheme \
+    build-essential \
     libuser \
     && apt-get autoremove -y && apt clean -y
 
@@ -22,6 +24,10 @@ RUN apt-get update -qq && apt-get -qq --yes install gcc gdb \
 
 # Set python 3 to be the default python
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
+
+# Install Node JS and npm
+RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
+RUN apt-get install -y nodejs
 
 # Install rust and rust live server
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable
