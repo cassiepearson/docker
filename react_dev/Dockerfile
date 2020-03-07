@@ -53,6 +53,6 @@ RUN mv /dotfiles/.zshrc $HOME/.zshrc \
 RUN nvim --noplugin --headless -i NONE -c VundleUpdate -c quitall
 
 # Mount my code folder as volume and make it the docker working directory
-VOLUME /Repos 
-WORKDIR /Repos 
+VOLUME /code 
+WORKDIR /code 
 ENTRYPOINT /bin/zsh 
