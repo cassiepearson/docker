@@ -3,10 +3,23 @@ MAINTAINER Christopher Negrich
 ENV DEBIAN_FRONTEND noninteractive
 
 # Install dependencies available from the package manager
-RUN apt-get update -qq && apt-get -qq --yes install gcc gdb \
+RUN apt-get update -qq && apt-get -qq --yes install gcc \
+    lldb \
+    clang \
+    libclang-dev \
+    gdb \
+    g++ \
     zsh \
     python3 \
     python3-pip \
+    build-essential \
+    cmake \
+    vim-nox \
+    mono-complete \
+    nodejs \
+    default-jdk \
+    npm \
+    python3-dev \
     vim \
     neovim \
     curl \
@@ -24,14 +37,14 @@ RUN apt-get update -qq && apt-get -qq --yes install gcc gdb \
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
 
 # Install rust and rust live server
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y --default-toolchain stable
-RUN ~/.cargo/bin/rustup component add rls rust-analysis rust-src
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
 
 # Install oh-my-zsh
 RUN sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
 # Install neovim dependencies
 RUN pip3 install --no-cache-dir neovim 
+RUN python3 -m pip install --user --upgrade pynvim
 RUN git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 RUN ~/.fzf/install
 RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -50,6 +63,14 @@ RUN mv /dotfiles/.zshrc $HOME/.zshrc \
 
 # Install vim plugins - This will produce a bunch of warnings that do not matter
 RUN nvim --noplugin --headless -i NONE -c VundleUpdate -c quitall
+
+# Compile YCM-Core
+RUN cd ~/.vim/bundle/YouCompleteMe && python3 install.py --clang-completer \
+      --cs-completer \
+      --java-completer \
+      --js-completer \
+      --rust-completer \
+      --system-libclang
 
 # Mount my code folder as volume and make it the docker working directory
 VOLUME /code 

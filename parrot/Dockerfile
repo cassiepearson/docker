@@ -2,6 +2,7 @@ FROM parrotsec/security:latest
 
 # Install dependencies available from the package manager
 RUN apt-get update -qq && apt-get -qq --yes install gdb \
+    lldb \
     zsh \
     python3 \
     python3-pip \
